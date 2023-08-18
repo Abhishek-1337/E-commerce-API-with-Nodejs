@@ -49,3 +49,36 @@ exports.viewCart = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+//Remove product from cart
+exports.deleteProduct = catchAsync(async (req, res, next) => {
+  const product = await Cart.findByIdAndDelete(req.params.id);
+  if (!product) {
+    return next(new AppError("No product find with that Id", 400));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      product,
+    },
+  });
+});
+
+//Update product in the cart
+exports.updateProduct = catchAsync(async (req, res, next) => {
+  const product = await Cart.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!product) {
+    return next(new AppError("No product found with this ID", 400));
+  }
+  res.status(200).json({
+    status: "success",
+    data: {
+      product,
+    },
+  });
+});
