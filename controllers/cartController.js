@@ -17,6 +17,14 @@ exports.addItem = catchAsync(async (req, res, next) => {
   let existingItem = await Cart.findOne({ product: productId });
   if (existingItem) {
     existingItem.quantity += Number(quantity);
+    await Cart.findByIdAndUpdate(
+      existingItem._id,
+      { quantity: existingItem.quantity },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
   } else {
     existingItem = await Cart.create({
       product: productId,

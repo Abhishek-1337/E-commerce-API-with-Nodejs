@@ -4,6 +4,7 @@ const globalErrorHandler = require("./controllers/errorController");
 const categoryRouter = require("./routes/categoryRoutes");
 const productRouter = require("./routes/productRoutes");
 const cartRouter = require("./routes/cartRoutes");
+const orderRouter = require("./routes/orderRoute");
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/api/v1/cart", cartRouter);
+app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/products", productRouter);
 
