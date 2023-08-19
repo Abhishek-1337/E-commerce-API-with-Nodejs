@@ -6,9 +6,7 @@ const Cart = require("../models/cartModel");
 const User = require("../models/userModel");
 
 exports.getOrder = catchAsync(async (req, res, next) => {
-  const items = await Order.findOne({ user: req.user.id }).populate(
-    "orderedItems"
-  );
+  const items = await Order.findById(req.params.id).populate("orderedItems");
 
   if (!items) {
     return next(new AppError("No order with this ID", 404));
