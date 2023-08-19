@@ -22,6 +22,18 @@ const orderSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  payment_method: {
+    type: String,
+    required: [true, "Payment method is not defined"],
+  },
+  shipping_address: {
+    type: String,
+    required: [true, "Shipping address is missing"],
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+  },
 });
 
 // orderSchema.pre(/^find/, function (next) {

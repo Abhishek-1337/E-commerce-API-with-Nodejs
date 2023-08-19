@@ -28,8 +28,10 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
+    shipping_address: req.body.shipping_address,
+    payment_method: req.body.payment_method,
   });
-
+  console.log(newUser);
   SendJwtToken(newUser, 201, res);
 });
 

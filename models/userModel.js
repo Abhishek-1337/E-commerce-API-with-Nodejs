@@ -30,6 +30,14 @@ const userSchema = mongoose.Schema({
       message: "Password are not same",
     },
   },
+  shipping_address: {
+    type: "String",
+    required: [true, "Shipping address is not provided"],
+  },
+  payment_method: {
+    type: "String",
+    required: [true, "Payment method is not provided"],
+  },
 });
 
 userSchema.pre("save", async function (next) {

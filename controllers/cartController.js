@@ -8,16 +8,11 @@ exports.addItem = catchAsync(async (req, res, next) => {
   const { productId, quantity } = req.body;
   let product = await Product.findById(productId);
 
-  // //User can only update their own cart
-  // if (req.user._id !== userId) {
-  //   return next(new AppError("Forbidden access", 401));
-  // }
   if (!product || quantity > product.countInStock) {
     return next(
       new AppError("Only available product must be added to the cart", 400)
     );
   }
-  console.log(req.user);
   let cart = await Cart.findOne({ user: req.user.id });
 
   if (!cart) {
