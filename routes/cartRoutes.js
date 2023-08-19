@@ -9,7 +9,7 @@ router.get("/", cartController.viewCart);
 router.route("/add-to-cart").post(cartController.addItem);
 router
   .route("/:id")
-  .delete(cartController.deleteProduct)
-  .patch(cartController.updateProduct);
+  .delete(cartController.deleteCartProduct)
+  .patch(cartController.updateCartProduct);
 
 module.exports = router;
