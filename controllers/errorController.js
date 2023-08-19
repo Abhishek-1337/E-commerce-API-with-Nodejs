@@ -38,42 +38,6 @@ const sendErrorDev = (err, req, res) => {
   // });
 };
 
-const sendErrorProd = (err, req, res) => {
-  if (req.originalUrl.startsWith("/api")) {
-    //A) This will be shown in case of error while using api
-    if (err.isOperational) {
-      return res.status(err.statusCode).json({
-        status: err.status,
-        message: err.message,
-      });
-    }
-    //Programming or other wrong don't leak other details
-    //Log error
-    // console.log('Error ' + err);
-    //Send generic message
-    return res.status(err.statusCode).json({
-      status: "error",
-      msg: "Something went very wrong!",
-    });
-  }
-
-  //B) This will be used when rendering pages in browser
-  //Operational: trusted error send message to client
-  if (err.isOperational) {
-    return res.status(err.statusCode).render("error", {
-      title: "Something went wrong",
-      msg: err.message,
-    });
-  } //Programming or other wrong don't leak other details
-  //Log error
-  // console.log('Error ' + err);
-  //Send generic message
-  return res.status(err.statusCode).render("error", {
-    title: "Something went wrong",
-    msg: "Please try again later",
-  });
-};
-
 const handleJsonWebTokenErrorDB = (err) => {
   const message = "Invalid token";
   return new AppError(message, 401);
