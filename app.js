@@ -1,6 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
-const rateLimit = require("express-rate-limit");
+// const rateLimit = require("express-rate-limit");
 const globalErrorHandler = require("./controllers/errorController");
 const categoryRouter = require("./routes/categoryRoutes");
 const productRouter = require("./routes/productRoutes");

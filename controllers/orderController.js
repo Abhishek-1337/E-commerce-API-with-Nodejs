@@ -5,7 +5,7 @@ const Order = require("../models/orderModel");
 const Cart = require("../models/cartModel");
 
 exports.getOrder = catchAsync(async (req, res, next) => {
-  const items = await Order.findById(req.params.id);
+  const items = await Order.findById(req.params.id).populate("orderedItems");
 
   if (!items) {
     return next(new AppError("No order with this ID", 404));
@@ -30,9 +30,7 @@ exports.getAllOrder = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    data: {
-      items,
-    },
+    items,
   });
 });
 
@@ -42,6 +40,7 @@ exports.placeOrder = catchAsync(async (req, res, next) => {
   let totalPrice = 0;
   let products = [];
   for (let item of items) {
+    console.log(item);
     let product = await Product.findById(item.product);
     // console.log(product);
     if (!product) {
