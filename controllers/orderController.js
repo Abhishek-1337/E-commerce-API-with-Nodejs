@@ -4,6 +4,38 @@ const AppError = require("../utils/appError");
 const Order = require("../models/orderModel");
 const Cart = require("../models/cartModel");
 
+exports.getOrder = catchAsync(async (req, res, next) => {
+  const items = await Order.findById(req.params.id);
+
+  if (!items) {
+    return next(new AppError("No order with this ID", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      items,
+    },
+  });
+});
+
+exports.getAllOrder = catchAsync(async (req, res, next) => {
+  const items = await Order.find();
+  if (!items) {
+    return res.status(200).json({
+      status: "success",
+      message: "No items found in history",
+    });
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      items,
+    },
+  });
+});
+
 exports.placeOrder = catchAsync(async (req, res, next) => {
   const { items } = req.body;
 
